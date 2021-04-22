@@ -15,9 +15,27 @@ use App\Http\Controllers\PostController;
 
 Route::get('/', 'App\Http\Controllers\PagesController@index');
 Route::get('/clothes', 'App\Http\Controllers\PagesController@clothes');
+Route::get('/login', 'App\Http\Controllers\PagesController@login');
 
-Route::resource('users', 'App\Http\Controllers\PostController');
+Route::resource('/clothes', 'App\Http\Controllers\PostController');
 
 Route::get('/add-to-cart/{id}',[
 'uses'=>'App\Http\Controllers\PostController@getAddToCart',
 'as'=> 'product.addToCart']);
+
+Route::get('/shopping-cart',[
+    'uses'=>'App\Http\Controllers\PostController@getCart',
+    'as'=> 'product.shoppingCart']);
+
+    
+Route::get('/clothes',[
+    'uses'=>'App\Http\Controllers\PostController@index',
+    'as'=> 'pages.clothes']);
+
+    Route::get('/signup',[
+        'uses'=>'App\Http\Controllers\UserController@getSignup',
+        'as'=> 'users.signup']);
+
+        Route::post('/signup',[
+            'uses'=>'App\Http\Controllers\UserController@postSignup',
+            'as'=> 'users.signup']);

@@ -104,8 +104,17 @@ class PostController extends Controller
 
         $request->session()->put('cart', $cart);
       //  dd($request->session()->get('cart'));
-        return redirect()->route('users\pages\clothes');
+        return view('pages.index');
 
+    }
+
+    public function getCart(){
+        if (!Session::has('cart')){
+            return view('pages.shopping-cart', ['products'=>null]);
+        }
+        $oldCart = Session::get('cart');
+        $cart = new Cart($oldCart);
+        return view('pages.shopping-cart',['products' =>$cart->items,'totalPrice'=>$cart->totalPrice]);
     }
 
 

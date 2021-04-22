@@ -13,5 +13,9 @@ class PagesController extends Controller
     public function clothes(){
         return view('pages.clothes');
     }
+
+    public function login(){
+        return view('users.login');
+    }
 }
 
