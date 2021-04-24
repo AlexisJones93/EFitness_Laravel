@@ -3,8 +3,8 @@
 @section('content')
 <body class="text-center">
 <main class="form-signin">
-    <form>
-      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+    <form action="{{route('users.login')}}" method="post">
+      <h1 class="h3 mb-3 fw-normal">Login</h1>
   
       <div class="form-floating">
         <label for="floatingInput">Email address</label>
@@ -23,7 +23,9 @@
         </label>
       </div>
       <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+      <a href="{{route('users.signup')}}" class="nav-link">New Here?</a>
       <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+      {{ csrf_field() }}
     </form>
   </main>
 </body>

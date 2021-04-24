@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Product;
 use Session;
 use App\Models\Cart;
+use Stripe\Stripe;
+use Stripe\Charge;
 
 class PostController extends Controller
 {
@@ -104,7 +106,7 @@ class PostController extends Controller
 
         $request->session()->put('cart', $cart);
       //  dd($request->session()->get('cart'));
-        return view('pages.index');
+      return redirect()->back();
 
     }
 
@@ -117,5 +119,40 @@ class PostController extends Controller
         return view('pages.shopping-cart',['products' =>$cart->items,'totalPrice'=>$cart->totalPrice]);
     }
 
+    public function getCheckOut(){
+        if (!Session::has('cart')){
+            return view('pages.shopping-cart', ['products'=>null]);
+        }
+
+        $oldCart = Session::get('cart');
+        $cart = new Cart($oldCart);
+        $total = $cart->totalPrice;
+        return view('pages.checkout',['total'=>$total,'products' =>$cart->items]);
+    }
+
+    public function postCheckout(Request $request){
+        if (!Session::has('cart')){
+            return redirect()->route('product.shoppingCart');
+        }
+
+        $oldCart = Session::get('cart');
+        $cart = new Cart($oldCart);
+
+        Stripe::setApiKey('sk_test_51IjVYtKR6vGMHmLbn4AmcrU5dwfxjjWQzetTHzT4nQYNEBhf4TGwNnzCLvA9NLwpen8VKOVQaR0w3gBjzTbDaExg00LILLkunT');
+        try{
+            Charge::create(array(
+                "amount" => $cart->totalPrice * 100,
+                "currency" => 'GBP',
+                "source" =>'tok_visa',
+                "description" => "test charge"
+            ));
+        } 
+        catch (\Exception $e){
+            return redirect()->route('checkout')->with('error',$e->getMessage());
+        }
+
+        Session::forget('cart');
+        return view('pages.index')->with('success', 'Successfully purchased your items!');
+    }
 
 }

@@ -27,6 +27,13 @@ Route::get('/shopping-cart',[
     'uses'=>'App\Http\Controllers\PostController@getCart',
     'as'=> 'product.shoppingCart']);
 
+        Route::get('/checkout',[
+            'uses'=>'App\Http\Controllers\PostController@getCheckOut',
+            'as'=> 'checkout']);
+
+            Route::post('/checkout',[
+                'uses'=>'App\Http\Controllers\PostController@postCheckOut',
+                'as'=> 'checkout']);
     
 Route::get('/clothes',[
     'uses'=>'App\Http\Controllers\PostController@index',
@@ -39,3 +46,19 @@ Route::get('/clothes',[
         Route::post('/signup',[
             'uses'=>'App\Http\Controllers\UserController@postSignup',
             'as'=> 'users.signup']);
+
+            Route::get('/login',[
+                'uses'=>'App\Http\Controllers\UserController@getLogin',
+                'as'=> 'users.login']);
+        
+                Route::post('/login',[
+                    'uses'=>'App\Http\Controllers\UserController@postLogin',
+                    'as'=> 'users.login']);
+
+                    Route::get('/users/profile',[
+                        'uses'=>'App\Http\Controllers\UserController@getProfile',
+                        'as'=> 'users.profile']);
+
+                        Route::get('/users/logout',[
+                            'uses'=>'App\Http\Controllers\UserController@getLogOut',
+                            'as'=> 'users.logout']);

@@ -1,6 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+@if(Session::has('success')){
+  <div class="row">
+    <div class="col-sn-6">
+      <div id="charge-message" class="alert alert-success">
+        {{Session::get('success')}}
+      </div>
+    </div>
+  </div>
+}
+@endif
 <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
