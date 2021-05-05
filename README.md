@@ -1,4 +1,4 @@
-# CO699  Laravel EFitnessProject
+# CO699  Laravel EFitness Project
 # Installation Instructions
 
 
